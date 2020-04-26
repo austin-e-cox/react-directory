@@ -16,6 +16,8 @@ const sortIndices = (arr) => {
 let b = Array(Object.keys(sortedEmployees[0]).length).fill(false)
 let entries = Object.keys(sortedEmployees[0]).map((e,i) => [e,b[i]]);
 let ascending = Object.fromEntries(entries);
+
+// create attribute list (ie list of column names)
 let allAttrs = Object.keys(ascending).filter((e)=>(e !== "id"));
 
 let sortCol = "";
@@ -72,10 +74,9 @@ class EmployeeTable extends Component {
     else{
       isAscending[attr] = true;
     }
-    console.log(employees)
     //this.setState({ sortedEmployees:employees, filteredEmployees:employees, ascending:isAscending, sortCol:attr, ...filters });
     this.sorting=true;
-    this.filterRows({ employees:employees, isAscending:isAscending});
+    this.filterRows({ employees:employees, isAscending:isAscending, sortCol:attr});
   }
 
   // filters rows down to what is in the assiciated input box
@@ -84,16 +85,18 @@ class EmployeeTable extends Component {
     let sortedEmployees;
     let currentEmployees;
     let isAscending;
-    console.log(data)
+    let sortCol;
     if (data) {
       sortedEmployees = data.employees;
       currentEmployees = [...sortedEmployees];
       isAscending = data.isAscending;
+      sortCol = data.sortCol;
     }
     else{
       sortedEmployees = [...this.state.sortedEmployees]
       currentEmployees = [...sortedEmployees];
       isAscending = this.state.ascending;
+      sortCol = this.state.sortCol;
     }
 
     // loop through each column filter
@@ -104,7 +107,7 @@ class EmployeeTable extends Component {
       let searchText = event.target.value;
       if (searchText === ""){
         filters = {...filters, ["filter-"+event.target.name]:searchText}
-        this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:this.state.sortCol })
+        this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:sortCol })
         return
       }
       
@@ -112,7 +115,7 @@ class EmployeeTable extends Component {
       const name = event.target.name;
       currentEmployees = currentEmployees.filter((e) => e[name].toLowerCase().startsWith(stl))
       filters = {...filters, ["filter-"+event.target.name]:searchText}
-      this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:this.state.sortCol })
+      this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:sortCol })
     })
   }
 
