@@ -3,35 +3,35 @@
     "id": 1,
     "firstname": "Lisa",
     "lastname": "Hooster",
-    "occupation": "Back-end",
+    "position": "Back-end",
     "location": "Seattle, WA"
   },
   {
     "id": 2,
     "firstname": "Lily",
     "lastname": "Hayes",
-    "occupation": "Front-end",
+    "position": "Front-end",
     "location": "Fremont, CA"
   },
   {
     "id": 3,
     "firstname": "James",
     "lastname": "Mason",
-    "occupation": "Manager",
+    "position": "Manager",
     "location": "Seattle, WA"
   },
   {
     "id": 4,
     "firstname": "Brian",
     "lastname": "Smith",
-    "occupation": "CEO",
+    "position": "CEO",
     "location": "Seattle, WA"
   },
   {
     "id": 5,
     "firstname": "Eduardo",
     "lastname": "Merro",
-    "occupation": "Databases",
+    "position": "Databases",
     "location": "Tacoma, WA"
   }
 ]

@@ -5,7 +5,7 @@ function Employee(props) {
     <tr>
       <td>{props.firstname}</td>
       <td>{props.lastname}</td>
-      <td>{props.occupation}</td>
+      <td>{props.position}</td>
       <td>{props.location}</td>
     </tr>
   );

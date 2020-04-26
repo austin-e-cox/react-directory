@@ -76,9 +76,9 @@ class EmployeeTable extends Component {
               <i className={this.getIcon("lastname")}></i>
               Lastname
             </th> 
-            <th onClick={() => this.sortItems("occupation")} style={this.getStyle("occupation")}>
-              <i className={this.getIcon("occupation")}></i>
-              Occupation
+            <th onClick={() => this.sortItems("position")} style={this.getStyle("position")}>
+              <i className={this.getIcon("position")}></i>
+              Position
             </th>
             <th onClick={() => this.sortItems("location")} style={this.getStyle("location")}>
               <i className={this.getIcon("location")}></i>
@@ -92,7 +92,7 @@ class EmployeeTable extends Component {
               key ={employee.id}
               firstname={employee.firstname}
               lastname={employee.lastname}
-              occupation={employee.occupation}
+              position={employee.position}
               location={employee.location}
             />)
           )}
