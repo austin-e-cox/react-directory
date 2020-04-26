@@ -16,6 +16,7 @@ const sortIndices = (arr) => {
 let b = Array(Object.keys(sortedEmployees[0]).length).fill(false)
 let entries = Object.keys(sortedEmployees[0]).map((e,i) => [e,b[i]]);
 let ascending = Object.fromEntries(entries);
+let allAttrs = Object.keys(ascending).filter((e)=>(e !== "id"));
 
 let sortCol = "";
 let filteredEmployees = sortedEmployees;
@@ -71,25 +72,48 @@ class EmployeeTable extends Component {
     else{
       isAscending[attr] = true;
     }
-    this.setState({ sortedEmployees:employees, filteredEmployees:employees, ascending:isAscending, sortCol:attr, filters:this.filters })
-    this.filterRows({target:{value:this[attr+"R"].current.value, name:attr}})
+    console.log(employees)
+    //this.setState({ sortedEmployees:employees, filteredEmployees:employees, ascending:isAscending, sortCol:attr, ...filters });
+    this.sorting=true;
+    this.filterRows({ employees:employees, isAscending:isAscending});
   }
 
   // filters rows down to what is in the assiciated input box
-  filterRows = (event) => {
-    // Getting the value and name of the input which triggered the change
-    let searchText = event.target.value;
-    if (searchText === ""){
-      filters = {...filters, ["filter-"+event.target.name]:searchText}
-      this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:this.state.sortedEmployees, ascending:this.state.ascending, sortCol:this.state.sortCol })
-      return
+  // start with all sorted rows and iteratively filter for each column every time to ensure we pick up all filters
+  filterRows = (data) => {
+    let sortedEmployees;
+    let currentEmployees;
+    let isAscending;
+    console.log(data)
+    if (data) {
+      sortedEmployees = data.employees;
+      currentEmployees = [...sortedEmployees];
+      isAscending = data.isAscending;
     }
-    
-    let stl = searchText.toLowerCase();
-    const name = event.target.name;
-    let employees = this.state.sortedEmployees.filter((e) => e[name].toLowerCase().startsWith(stl))
-    filters = {...filters, ["filter-"+event.target.name]:searchText}
-    this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:employees, ascending:this.state.ascending, sortCol:this.state.sortCol })
+    else{
+      sortedEmployees = [...this.state.sortedEmployees]
+      currentEmployees = [...sortedEmployees];
+      isAscending = this.state.ascending;
+    }
+
+    // loop through each column filter
+    allAttrs.forEach(attr => {
+      let event = {target:{value:this[attr+"R"].current.value, name:attr}};
+
+      // Getting the value and name of the input which triggered the change
+      let searchText = event.target.value;
+      if (searchText === ""){
+        filters = {...filters, ["filter-"+event.target.name]:searchText}
+        this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:this.state.sortCol })
+        return
+      }
+      
+      let stl = searchText.toLowerCase();
+      const name = event.target.name;
+      currentEmployees = currentEmployees.filter((e) => e[name].toLowerCase().startsWith(stl))
+      filters = {...filters, ["filter-"+event.target.name]:searchText}
+      this.setState({ ...filters, sortedEmployees:this.state.sortedEmployees, filteredEmployees:currentEmployees, ascending:isAscending, sortCol:this.state.sortCol })
+    })
   }
 
 //<i className={(this.state.ascending["firstname"]) ? "fas fa-sort-up" : "fas fa-sort-down"}+{(this.state.sortCol==="firstname" ? " blue-text" : "")}></i>
@@ -104,7 +128,7 @@ class EmployeeTable extends Component {
                 <div className="pr-15">First name</div>
               </div>
               <input value={this.state["filter-firstname"]} name="firstname" type="text" size="10" placeholder="filter firstname"
-                onChange={this.filterRows}
+                onChange={() => this.filterRows(0)}
                 ref={this.firstnameR} />
             </th>
             <th style={this.getStyle("lastname")}>
@@ -113,7 +137,7 @@ class EmployeeTable extends Component {
                 <div className="pr-15">Last name</div>
               </div>
               <input value={this.state["filter-lastname"]} name="lastname" type="text" size="10" placeholder="filter lastname"
-                onChange={this.filterRows}
+                onChange={() => this.filterRows(0)}
                 ref={this.lastnameR} />
             </th>            
             <th style={this.getStyle("position")}>
@@ -122,7 +146,7 @@ class EmployeeTable extends Component {
                 <div className="pr-15">Position</div>
               </div>
               <input value={this.state["filter-position"]} name="position" type="text" size="10" placeholder="filter position"
-                onChange={this.filterRows}
+                onChange={() => this.filterRows(0)}
                 ref={this.positionR} />
             </th>            
             <th style={this.getStyle("location")}>
@@ -131,7 +155,7 @@ class EmployeeTable extends Component {
                 <div className="pr-15">Location</div>
               </div>
               <input value={this.state["filter-location"]} name="location" type="text" size="10" placeholder="filter location"
-                onChange={this.filterRows}
+                onChange={() => this.filterRows(0)}
                 ref={this.locationR} />
             </th>
           </tr>
