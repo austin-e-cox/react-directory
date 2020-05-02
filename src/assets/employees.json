@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "firstname": "Lisa",
+    "lastname": "Hooster",
+    "position": "Back-end",
+    "location": "Seattle, WA"
+  },
+  {
+    "id": 2,
+    "firstname": "Lily",
+    "lastname": "Hayes",
+    "position": "Front-end",
+    "location": "Fremont, CA"
+  },
+  {
+    "id": 3,
+    "firstname": "James",
+    "lastname": "Mason",
+    "position": "Manager",
+    "location": "Seattle, WA"
+  },
+  {
+    "id": 4,
+    "firstname": "Brian",
+    "lastname": "Smith",
+    "position": "CEO",
+    "location": "Seattle, WA"
+  },
+  {
+    "id": 5,
+    "firstname": "Eduardo",
+    "lastname": "Merro",
+    "position": "Databases",
+    "location": "Tacoma, WA"
+  }
+]

@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
+  "short_name": "Emp. Dir.",
+  "name": "Employee Directory",
+=======
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [
@@ -18,6 +22,7 @@
       "sizes": "512x512"
     }
   ],
+>>>>>>> Initialize project using Create React App
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
